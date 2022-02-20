@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { DATA } from '../data'
+import { useDispatch, useSelector } from 'react-redux'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { PostList } from '../components/PostList'
+import { loadPosts } from '../store/actions/post'
 
 export const BookedScreen = ({ navigation }) => {
   const openPostHandler = (post) => {
@@ -12,13 +13,16 @@ export const BookedScreen = ({ navigation }) => {
       booked: post.booked,
     })
   }
+  // данные уже загружены в MainScreen
+  // const dispatch = useDispatch()
 
-  return (
-    <PostList
-      data={DATA.filter((post) => post.booked)}
-      onOpen={openPostHandler}
-    />
-  )
+  // useEffect(() => {
+  //   dispatch(loadPosts())
+  // }, [dispatch])
+
+  const bookedPosts = useSelector((state) => state.post.bookedPosts)
+
+  return <PostList data={bookedPosts} onOpen={openPostHandler} />
 }
 
 BookedScreen.navigationOptions = ({ navigation }) => ({
