@@ -7,7 +7,7 @@ import { THEME } from '../theme'
 export const AppHeaderIcon = props => (
   <HeaderButton
     {...props}
-    iconSize={24}
+    iconSize={30}
     IconComponent={Ionicons}
     color={Platform.OS === 'android' ? '#fff' : THEME.MAIN_COLOR}
   />

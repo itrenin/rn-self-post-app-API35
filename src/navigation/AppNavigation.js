@@ -3,12 +3,16 @@ import { createAppContainer, ThemeColors } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
+import { createDrawerNavigator } from 'react-navigation-drawer'
 import { Platform } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { MainScreen } from '../screens/MainScreen'
 import { PostScreen } from '../screens/PostScreen'
 import { BookedScreen } from '../screens/BookedScreen'
 import { THEME } from '../theme'
+import { AboutScreen } from '../screens/AboutScreen'
+import { CreateScreen } from '../screens/CreateScreen'
+
 const navigatorOptions = {
   defaultNavigationOptions: {
     headerStyle: {
@@ -69,4 +73,53 @@ const BottomNavigator =
         },
       })
 
-export const AppNavigation = createAppContainer(BottomNavigator)
+const AboutNavigator = createStackNavigator(
+  {
+    About: AboutScreen,
+  },
+  navigatorOptions
+)
+
+const CreateNavigator = createStackNavigator(
+  {
+    Create: CreateScreen,
+  },
+  navigatorOptions
+)
+
+const MainNavigator = createDrawerNavigator({
+  PostTabs: {
+    screen: BottomNavigator,
+    navigationOptions: {
+      drawerLabel: 'Главная',
+      drawerIcon: <Ionicons name="ios-home" size={25} />,
+    },
+  },
+  About: {
+    screen: AboutNavigator,
+    navigationOptions: {
+      drawerLabel: 'О приложении',
+      drawerIcon: (
+        <Ionicons name="ios-information-circle-outline" size={25} color="black" />
+      ),
+    },
+  },
+  Create: {
+    screen: CreateNavigator,
+    navigationOptions: {
+      drawerLabel: 'Создать',
+      drawerIcon: <Ionicons name="ios-create" size={25} />,
+    },
+  },
+}, {
+  contentOptions:{
+    activeTintColor: THEME.MAIN_COLOR,
+    labelStyle:{
+      fontWeight: 'normal', // to good work for next option
+      fontFamily: 'open-regular'
+    },
+    
+  }
+})
+
+export const AppNavigation = createAppContainer(MainNavigator)

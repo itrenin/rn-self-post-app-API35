@@ -21,7 +21,7 @@ export const BookedScreen = ({ navigation }) => {
   )
 }
 
-BookedScreen.navigationOptions = {
+BookedScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: 'Избранное',
 
   headerLeft: (
@@ -29,8 +29,8 @@ BookedScreen.navigationOptions = {
       <Item
         title="Toggle Drawer"
         iconName="ios-menu"
-        onPress={() => console.log('Press photo')}
+        onPress={() => navigation.toggleDrawer()}
       />
     </HeaderButtons>
   ),
-}
+})
