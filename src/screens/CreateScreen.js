@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   View,
@@ -16,34 +16,35 @@ import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { THEME } from '../theme'
 import { addPost } from '../store/actions/post'
 
+import { PhotoPicker } from '../components/PhotoPicker'
+
 export const CreateScreen = ({navigation}) => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
-  const img =
-    'https://cdn.londonandpartners.com/visit/general-london/areas/river/76709-640x360-houses-of-parliament-and-london-eye-on-thames-from-above-640.jpg'
-
+  const imgRef = useRef()
+  
   const saveHandler = () => {
     const post = {
       date: new Date().toJSON(),
       text: text,
-      img,
+      img: imgRef.current,
       booked: false,
     }
     dispatch(addPost(post))
     navigation.navigate('Main')
     setText('')
+    photoPickHandler(null)
+  }
+
+  const photoPickHandler = (uri)=>{
+imgRef.current = uri
   }
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPres={() => Keyboard.dismiss()}>
         <View style={styles.wrapper}>
           <Text style={styles.title}>Создай новый пост</Text>
-          <Image
-            style={{ width: '100%', height: 200, marginBottom: 10 }}
-            source={{
-              uri: img,
-            }}
-          />
+          <PhotoPicker onPick={photoPickHandler}/>
           <TextInput
             style={styles.textarea}
             placeholder={'Введите текст поста'}
@@ -56,6 +57,7 @@ export const CreateScreen = ({navigation}) => {
             title="Создать пост"
             color={THEME.MAIN_COLOR}
             onPress={saveHandler}
+            disabled={!text || !imgRef.current}
           />
         </View>
       </TouchableWithoutFeedback>
