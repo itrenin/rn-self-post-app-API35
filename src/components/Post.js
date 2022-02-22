@@ -4,10 +4,18 @@ import {
   StyleSheet,
   ImageBackground,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
 
 export const Post = ({ post, onOpen }) => {
+  // console.log(`
+  // =================
+  // Время: ${new Date().toLocaleTimeString()}
+  // Это объект поста из Post
+  // id: ${post.id}
+  // img: ${post.img}
+  // date: ${post.date}
+  // booked: ${post.booked}`)
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(post)}>
       <View style={styles.post}>
@@ -26,20 +34,20 @@ export const Post = ({ post, onOpen }) => {
 const styles = StyleSheet.create({
   post: {
     marginBottom: 15,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   image: {
     width: '100%',
-    height: 200
+    height: 200,
   },
   textWrap: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     paddingVertical: 5,
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   title: {
     color: '#fff',
-    fontFamily: 'open-regular'
-  }
+    fontFamily: 'open-regular',
+  },
 })

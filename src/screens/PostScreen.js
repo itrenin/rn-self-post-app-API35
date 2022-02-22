@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Item, HeaderButtons } from 'react-navigation-header-buttons'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { THEME } from '../theme'
-import { toggleBooked } from '../store/actions/post'
+import { toggleBooked, removePost } from '../store/actions/post'
 
 export const PostScreen = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -30,9 +30,11 @@ export const PostScreen = ({ navigation }) => {
   useEffect(() => {
     navigation.setParams({ booked })
   }, [booked])
+
   const toggleHandler = useCallback(() => {
     dispatch(toggleBooked(postId))
   }, [dispatch, postId])
+
   useEffect(() => {
     navigation.setParams({ toggleHandler })
   }, [toggleHandler])
@@ -46,14 +48,26 @@ export const PostScreen = ({ navigation }) => {
           text: 'Отменить',
           style: 'cancel',
         },
-        { text: 'Удалить', style: 'destructive', onPress: () => {} },
+        {
+          text: 'Удалить',
+          style: 'destructive',
+          onPress() {
+            //console.log(postId)
+            navigation.navigate('Main')
+            dispatch(removePost(postId))
+          },
+        },
       ],
       { cancelable: false }
     )
   }
+  if (!post) {
+    return null
+  }
 
   return (
     <ScrollView>
+      {/* {console.log(post.id)} */}
       <Image source={{ uri: post.img }} style={styles.image} />
       <View style={styles.textWrap}>
         <Text style={styles.title}>{post.text}</Text>

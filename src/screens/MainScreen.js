@@ -22,6 +22,8 @@ export const MainScreen = ({ navigation }) => {
 
   const allPosts = useSelector((state) => state.post.allPosts)
 
+  // console.log(`Это All Posts из MainScreen${allPosts}`)
+
   return <PostList data={allPosts} onOpen={openPostHandler} />
 }
 

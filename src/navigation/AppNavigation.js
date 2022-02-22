@@ -117,6 +117,7 @@ const MainNavigator = createDrawerNavigator({
     labelStyle:{
       fontWeight: 'normal', // to good work for next option
       fontFamily: 'open-regular'
+    
     },
     
   }
